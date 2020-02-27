@@ -1,12 +1,12 @@
 <template>
   <div class="home">
     <ul>
-      <li v-for="(item,index) in allItems" :key="index">
-        {{index+1}}:{{item}}
+      <li v-for="item in allItems" v-bind:key="item.id">
+        {{item.id}}>>>>>{{item.task}}
         <button @click="deleteItem(index)">Delete</button>
       </li>
     </ul>
-    <input ref="item" @keyup.enter="save" type="text" v-model="item">
+    <input @keyup.enter="save" type="text" v-model="task">
       <button @click="save" >Add Item</button>
   </div>
 </template>
@@ -19,7 +19,8 @@ export default {
   name: 'Home',
   data () {
     return {
-      item: ''
+      task: '',
+      newId: 3
     }
   },
   computed: {
@@ -34,9 +35,9 @@ export default {
       deleteItem: 'deleteItem'
     }),
     save () {
-      this.addItem(this.item)
-      this.item = ''
-      this.$refs.item.focus()
+      this.addItem(this)
+      this.newId++
+      this.task = ''
     }
   }
 }
