@@ -6,19 +6,19 @@ Vue.use(Vuex)
 export default new Vuex.Store({
   state: {
     items: [{
-      id: 0,
-      task: 'Buy food at the supermarket.',
-      description: 'jun'
+
+      task: '넌 내 기억을 지워야 돼 Im poison',
+      description: 'I know I cant take it no more'
     },
     {
-      id: 1,
-      task: 'Organize the living room.',
-      description: 'josh'
+
+      task: 'This is love 온몸에 퍼진',
+      description: '내 모든 Fear 내 속의 상처'
     },
     {
-      id: 2,
-      task: 'Read every class and tutorial on Sabe.io.',
-      description: 'boo'
+
+      task: '매일 내가 너로 아파도',
+      description: 'The way I love The way I love'
     }]
   },
   mutations: {
@@ -33,6 +33,11 @@ export default new Vuex.Store({
     'DELETE_ITEM' (state, payload) {
       var index = state.items.findIndex(item => item.id === payload)
       state.items.splice(index, 1)
+      console.log(index)
+    },
+    'EDIT_ITEM' (state, payload) {
+      var index = state.items.findIndex(item => item.id === payload)
+      console.log(index)
     }
   },
   actions: {
@@ -43,6 +48,9 @@ export default new Vuex.Store({
     },
     deleteItem ({ commit }, payload) {
       commit('DELETE_ITEM', payload)
+    },
+    editItem ({ commit }, payload) {
+      commit('EDIT_ITEM', payload)
     }
   },
   getters: {

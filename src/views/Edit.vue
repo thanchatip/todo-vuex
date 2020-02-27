@@ -5,12 +5,12 @@
       </div>
       <div class="form-group">
         <label>Input Todo</label>
-        <input v-model="todo.title" @click="createError = false" type="text" class="form-control">
+        <input v-model="task" @click="createError = false" type="text" class="form-control">
         <small class="form-text text-muted">Required*</small>
       </div>
       <div class="form-group">
         <label>Description</label>
-        <input v-model="todo.description" type="text" class="form-control">
+        <input v-model="description" type="text" class="form-control">
       </div>
       <button class="btn btn-primary" @click="cancel">Cancel</button>&nbsp;
       <button class="btn btn-primary" @click="save">Save</button>
@@ -19,23 +19,36 @@
 </template>
 
 <script>
+import { mapActions, mapGetters } from 'vuex'
 export default {
   data () {
     return {
       createError: false,
-      todo: {
-        title: '',
-        description: ''
-      }
+      task: '',
+      description: ''
+      // newId: 3
     }
   },
+  computed: {
+    ...mapGetters({
+      itemCount: 'itemCount',
+      allItems: 'allItems'
+    })
+  },
   methods: {
+    ...mapActions({
+      addItem: 'addItem',
+      deleteItem: 'deleteItem'
+    }),
     cancel () {
       this.$router.push({ name: 'Todo' })
     },
     save () {
-      // call vuex save func
-      console.log('save')
+      this.addItem(this)
+      // this.newId++
+      this.task = ''
+      this.description = ''
+      this.$router.push({ name: 'Home' })
     }
   }
 }
