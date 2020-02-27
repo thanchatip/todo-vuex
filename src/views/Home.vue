@@ -2,11 +2,12 @@
   <div class="home">
     <ul>
       <li v-for="item in allItems" v-bind:key="item.id">
-        {{item.id}}>>>>>{{item.task}}
-        <button @click="deleteItem(index)">Delete</button>
+        {{item.id}}>>>>>{{item.task}}>>>>>{{item.description}}
+        <button @click="deleteItem(item.id)">Delete</button>
       </li>
     </ul>
-    <input @keyup.enter="save" type="text" v-model="task">
+    <input placeholder="Enter Task" type="text" v-model="task">
+    <input placeholder="Enter Description" type="text" v-model="description">
       <button @click="save" >Add Item</button>
   </div>
 </template>
@@ -20,6 +21,7 @@ export default {
   data () {
     return {
       task: '',
+      description: '',
       newId: 3
     }
   },
@@ -38,6 +40,7 @@ export default {
       this.addItem(this)
       this.newId++
       this.task = ''
+      this.description = ''
     }
   }
 }

@@ -8,17 +8,17 @@ export default new Vuex.Store({
     items: [{
       id: 0,
       task: 'Buy food at the supermarket.',
-      completed: false
+      description: 'jun'
     },
     {
       id: 1,
       task: 'Organize the living room.',
-      completed: true
+      description: 'josh'
     },
     {
       id: 2,
       task: 'Read every class and tutorial on Sabe.io.',
-      completed: false
+      description: 'boo'
     }]
   },
   mutations: {
@@ -26,11 +26,12 @@ export default new Vuex.Store({
       var newTask = {
         id: payload.newId,
         task: payload.task,
-        completed: false
+        description: payload.description
       }
       state.items.push(newTask)
     },
-    'DELETE_ITEM' (state, index) {
+    'DELETE_ITEM' (state, payload) {
+      var index = state.items.findIndex(item => item.id === payload)
       state.items.splice(index, 1)
     }
   },
@@ -40,8 +41,8 @@ export default new Vuex.Store({
     addItem ({ commit }, payload) {
       commit('ADD_ITEM', payload)
     },
-    deleteItem ({ commit }, index) {
-      commit('DELETE_ITEM', index)
+    deleteItem ({ commit }, payload) {
+      commit('DELETE_ITEM', payload)
     }
   },
   getters: {
