@@ -29,6 +29,11 @@ export default {
       // newId: 3
     }
   },
+  mounted () {
+    const v = this
+    v.task = this.$route.params.task
+    v.description = this.$route.params.description
+  },
   computed: {
     ...mapGetters({
       itemCount: 'itemCount',
@@ -41,14 +46,14 @@ export default {
       deleteItem: 'deleteItem'
     }),
     cancel () {
-      this.$router.push({ name: 'Todo' })
+      this.$router.push({ name: 'todo' })
     },
     save () {
       this.addItem(this)
       // this.newId++
       this.task = ''
       this.description = ''
-      this.$router.push({ name: 'Home' })
+      this.$router.push({ name: 'home' })
     }
   }
 }

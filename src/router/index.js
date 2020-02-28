@@ -9,22 +9,22 @@ Vue.use(VueRouter)
 const routes = [
   {
     path: '/',
-    name: 'Home',
+    name: 'home',
     component: Home
   },
   {
     path: '/todo',
-    name: 'Todo',
+    name: 'todo',
     component: Todo
   },
   {
     path: '/create',
-    name: 'Create',
+    name: 'create',
     component: Edit
   },
   {
     path: '/edit/:id',
-    name: 'Edit',
+    name: 'edit',
     component: Edit
   }
 ]

@@ -1,16 +1,16 @@
 <template>
   <div class="home">
 
-      <div class="card mb-2" v-for="item in allItems" v-bind:key="item.id">
+      <div class="card mb-2" v-for="(item,index) in allItems" v-bind:key="item.id">
         <div class="card-body">
-        <h4 class="card-title">Task : {{ item.task }}</h4>
-        <p class="card-text">Description : {{ item.description }}</p>
+        <h4 class="card-title">Task {{index + 1}} : {{ item.task }}</h4>
+        <p class="card-text">{{item.description}}</p>
         </div>
          <div class="row">
           <div class="col-auto mr-auto">
-            <button @click="editItem(item.id)" class="btn btn-primary"> Edit </button>
+            <button @click="edit(index,item)" class="btn btn-primary"> Edit </button>
                 &nbsp;
-              <button @click="deleteItem(item.id)" class="btn btn-danger" >Delete</button>&nbsp;
+              <button @click="deleteItem(index)" class="btn btn-danger">Delete</button>&nbsp;
           </div>
 
          <div class="col-auto">
@@ -54,6 +54,9 @@ export default {
       // this.newId++
       this.task = ''
       this.description = ''
+    },
+    edit (index, item) {
+      this.$router.push({ name: 'edit', params: { id: index, task: item.task, description: item.description } })
     }
   }
 }

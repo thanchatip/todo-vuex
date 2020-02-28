@@ -30,13 +30,13 @@ export default new Vuex.Store({
       }
       state.items.push(newTask)
     },
-    'DELETE_ITEM' (state, payload) {
-      var index = state.items.findIndex(item => item.id === payload)
+    'DELETE_ITEM' (state, index) {
+      // var index = state.items.findIndex(item => item.id === payload)
       state.items.splice(index, 1)
       console.log(index)
     },
-    'EDIT_ITEM' (state, payload) {
-      var index = state.items.findIndex(item => item.id === payload)
+    'EDIT_ITEM' (state, index, payload) {
+      // var index = state.items.findIndex(item => item.id === payload)
       console.log(index)
     }
   },
