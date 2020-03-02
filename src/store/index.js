@@ -5,60 +5,78 @@ Vue.use(Vuex)
 
 export default new Vuex.Store({
   state: {
-    items: [{
-
+    todos: [{
       task: '넌 내 기억을 지워야 돼 Im poison',
       description: 'I know I cant take it no more'
     },
     {
-
       task: 'This is love 온몸에 퍼진',
       description: '내 모든 Fear 내 속의 상처'
     },
     {
-
       task: '매일 내가 너로 아파도',
       description: 'The way I love The way I love'
     }]
   },
   mutations: {
-    'ADD_ITEM' (state, payload) {
+    'ADD_TODO' (state, payload) {
       var newTask = {
         id: payload.newId,
         task: payload.task,
         description: payload.description
       }
-      state.items.push(newTask)
+      state.todos.push(newTask)
     },
-    'DELETE_ITEM' (state, index) {
-      // var index = state.items.findIndex(item => item.id === payload)
-      state.items.splice(index, 1)
+    'EDIT_TODO' (state, todo) {
+      var todos = state.todos
+      todos.splice(todos.indexOf(todo), 1)
+      state.todos = todos
+      state.newTask = todo.task
+    },
+    'DELETE_TODO' (state, index) {
+      state.todos.splice(index, 1)
       console.log(index)
     },
-    'EDIT_ITEM' (state, index, payload) {
-      // var index = state.items.findIndex(item => item.id === payload)
-      console.log(index)
+    'MOVE_UP' (state, index) {
+      if (index === 0) {
+        return
+      }
+      const todo = state.todos[index]
+      state.todos.splice(index, 1)
+      state.todos.splice(index - 1, 0, todo)
+    },
+    'MOVE_DOWN' (state, index) {
+      if (index === state.todos.length - 1) {
+        return
+      }
+      const todo = state.todos[index]
+      state.todos.splice(index, 1)
+      state.todos.splice(index + 1, 0, todo)
     }
   },
   actions: {
-    // firebase query here
-    // logic code here
-    addItem ({ commit }, payload) {
-      commit('ADD_ITEM', payload)
+    addTodo ({ commit }, payload) {
+      commit('ADD_TODO', payload)
     },
-    deleteItem ({ commit }, payload) {
-      commit('DELETE_ITEM', payload)
+    deleteTodo ({ commit }, payload) {
+      commit('DELETE_TODO', payload)
     },
-    editItem ({ commit }, payload) {
+    editTodo ({ commit }, payload) {
       commit('EDIT_ITEM', payload)
+    },
+    moveUpTodo ({ commit }, payload) {
+      commit('MOVE_UP', payload)
+    },
+    moveDownTodo ({ commit }, payload) {
+      commit('MOVE_DOWN', payload)
     }
   },
   getters: {
-    itemCount (state) {
-      return state.items.length
+    todoCount (state) {
+      return state.todos.length
     },
-    allItems (state) {
-      return state.items
+    allTodos (state) {
+      return state.todos
     }
   }
 })

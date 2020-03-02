@@ -1,22 +1,22 @@
 <template>
   <div class="home">
 
-      <div class="card mb-2" v-for="(item,index) in allItems" v-bind:key="item.id">
+      <div class="card mb-2" v-for="(todo,index) in allTodos" v-bind:key="todo.id">
         <div class="card-body">
-        <h4 class="card-title">Task {{index + 1}} : {{ item.task }}</h4>
-        <p class="card-text">{{item.description}}</p>
+        <h4 class="card-title">Task {{index + 1}} : {{ todo.task }}</h4>
+        <p class="card-text">{{todo.description}}</p>
         </div>
          <div class="row">
           <div class="col-auto mr-auto">
-            <button @click="edit(index,item)" class="btn btn-primary"> Edit </button>
+            <button @click="edit(index,todo)" class="btn btn-primary"> Edit </button>
                 &nbsp;
-              <button @click="deleteItem(index)" class="btn btn-danger">Delete</button>&nbsp;
+              <button @click="deleteTodo(index)" class="btn btn-danger">Delete</button>&nbsp;
           </div>
 
          <div class="col-auto">
-            <button  type="button" class="btn btn-outline-info"> Up
+            <button  v-if="index !== 0" @click="moveUpTodo(index)" type="button" class="btn btn-outline-info"> Up
             </button>&nbsp;
-            <button type="button" class="btn btn-outline-info"> Down </button>
+            <button v-if="index !== todoCount-1" type="button" @click="moveDownTodo(index)" class="btn btn-outline-info"> Down </button>
          </div>
          </div>
          <br>
@@ -27,7 +27,6 @@
 
 <script>
 import { mapActions, mapGetters } from 'vuex'
-// @ is an alias to /src
 
 export default {
   name: 'Home',
@@ -39,24 +38,20 @@ export default {
   },
   computed: {
     ...mapGetters({
-      itemCount: 'itemCount',
-      allItems: 'allItems'
+      todoCount: 'todoCount',
+      allTodos: 'allTodos'
     })
   },
   methods: {
     ...mapActions({
-      addItem: 'addItem',
-      deleteItem: 'deleteItem',
-      editItem: 'editItem'
+      addTodo: 'addTodo',
+      deleteTodo: 'deleteTodo',
+      editTodo: 'editTodo',
+      moveUpTodo: 'moveUpTodo',
+      moveDownTodo: 'moveDownTodo'
     }),
-    save () {
-      this.addItem(this)
-      // this.newId++
-      this.task = ''
-      this.description = ''
-    },
-    edit (index, item) {
-      this.$router.push({ name: 'edit', params: { id: index, task: item.task, description: item.description } })
+    edit (index, todo) {
+      this.$router.push({ name: 'edit', params: { id: index, task: todo.task, description: todo.description } })
     }
   }
 }

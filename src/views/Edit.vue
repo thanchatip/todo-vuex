@@ -13,7 +13,9 @@
         <input v-model="description" type="text" class="form-control">
       </div>
       <button class="btn btn-primary" @click="cancel">Cancel</button>&nbsp;
-      <button class="btn btn-primary" @click="save">Save</button>
+      <button v-if="this.$route.params.task"  class="btn btn-primary" >Edit</button>
+      <button v-else class="btn btn-primary" @click="save">Save</button>
+
     </div>
 
 </template>
@@ -26,13 +28,12 @@ export default {
       createError: false,
       task: '',
       description: ''
-      // newId: 3
     }
   },
   mounted () {
-    const v = this
-    v.task = this.$route.params.task
-    v.description = this.$route.params.description
+    const editTodo = this
+    editTodo.task = this.$route.params.task
+    editTodo.description = this.$route.params.description
   },
   computed: {
     ...mapGetters({
@@ -43,14 +44,14 @@ export default {
   methods: {
     ...mapActions({
       addItem: 'addItem',
-      deleteItem: 'deleteItem'
+      deleteItem: 'deleteItem',
+      editItem: 'editItem'
     }),
     cancel () {
-      this.$router.push({ name: 'todo' })
+      this.$router.push({ name: 'home' })
     },
     save () {
       this.addItem(this)
-      // this.newId++
       this.task = ''
       this.description = ''
       this.$router.push({ name: 'home' })
