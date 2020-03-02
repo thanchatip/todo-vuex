@@ -30,11 +30,11 @@ export default new Vuex.Store({
       }
       state.todos.push(newTask)
     },
-    'EDIT_TODO' (state, todo) {
-      state.todos[todo.id] = {
-        id: todo.id,
-        task: todo.task,
-        description: todo.description
+    'EDIT_TODO' (state, payload) {
+      state.todos[payload.id] = {
+        id: payload.id,
+        task: payload.task,
+        description: payload.description
       }
       console.log('updated !!')
     },

@@ -15,7 +15,6 @@
       <button class="btn btn-primary" @click="cancel">Cancel</button>&nbsp;
       <button v-if="this.$route.params.task" @click="edit" class="btn btn-primary" >Save</button>
       <button v-else class="btn btn-primary" @click="save">Save</button>
-
     </div>
 
 </template>
@@ -34,7 +33,6 @@ export default {
   mounted () {
     const editTodo = this
     editTodo.id = this.$route.params.id
-    console.log(editTodo.id)
     editTodo.task = this.$route.params.task
     editTodo.description = this.$route.params.description
   },

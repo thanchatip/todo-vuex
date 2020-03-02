@@ -1,6 +1,5 @@
 <template>
   <div class="home">
-
       <div class="card mb-2" v-for="(todo,index) in allTodos" v-bind:key="todo.id">
         <div class="card-body">
         <h4 class="card-title">Task {{index + 1}} : {{ todo.task }}</h4>
@@ -12,7 +11,6 @@
                 &nbsp;
               <button @click="deleteTodo(index)" class="btn btn-danger">Delete</button>&nbsp;
           </div>
-
          <div class="col-auto">
             <button  v-if="index !== 0" @click="moveUpTodo(index)" type="button" class="btn btn-outline-info"> Up
             </button>&nbsp;
@@ -21,7 +19,6 @@
          </div>
          <br>
       </div>
-
   </div>
 </template>
 
