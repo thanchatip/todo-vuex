@@ -9,7 +9,7 @@
           <div class="col-auto mr-auto">
             <button @click="edit(index,todo)" class="btn btn-primary"> Edit </button>
                 &nbsp;
-              <button @click="deleteTodo(index)" class="btn btn-danger">Delete</button>&nbsp;
+              <button @click="deleteTodo(todo.id)" class="btn btn-danger">Delete</button>&nbsp;
           </div>
          <div class="col-auto">
             <button  v-if="index !== 0" @click="moveUpTodo(index)" type="button" class="btn btn-outline-info"> Up
@@ -46,11 +46,15 @@ export default {
       deleteTodo: 'deleteTodo',
       editTodo: 'editTodo',
       moveUpTodo: 'moveUpTodo',
-      moveDownTodo: 'moveDownTodo'
+      moveDownTodo: 'moveDownTodo',
+      loadTodo: 'loadTodo'
     }),
     edit (index, todo) {
       this.$router.push({ name: 'edit', params: { id: index, task: todo.task, description: todo.description } })
     }
+  },
+  mounted () {
+    this.loadTodo()
   }
 }
 </script>

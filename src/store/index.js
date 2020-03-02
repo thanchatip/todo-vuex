@@ -1,9 +1,16 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
+import '@firebase/firestore'
+import db from '../firebase'
 
 Vue.use(Vuex)
 
 export default new Vuex.Store({
+  firestore () {
+    return {
+      todos: db.collection('todos')
+    }
+  },
   state: {
     todos: [{
       id: 0,
@@ -28,7 +35,25 @@ export default new Vuex.Store({
         task: payload.task,
         description: payload.description
       }
+      db.collection('todos').add({
+        task: payload.task,
+        description: payload.description
+      })
       state.todos.push(newTask)
+    },
+    'LOAD_TODO' (state) {
+      const todolist = []
+      db.collection('todos').get().then(function (querySnapshot) {
+        querySnapshot.forEach(function (doc) {
+          const todo = {
+            id: doc.id,
+            task: doc.data().task,
+            description: doc.data().description
+          }
+          todolist.push(todo)
+        })
+      })
+      state.todos = todolist
     },
     'EDIT_TODO' (state, payload) {
       state.todos[payload.id] = {
@@ -36,10 +61,13 @@ export default new Vuex.Store({
         task: payload.task,
         description: payload.description
       }
-      console.log('updated !!')
     },
-    'DELETE_TODO' (state, index) {
-      state.todos.splice(index, 1)
+    'DELETE_TODO' (state, payload) {
+      state.todos.splice(payload, 1)
+      db.collection('todos').doc(payload).delete().then(function () {})
+        .catch(function (error) {
+          console.error('Error removing document: ', error)
+        })
       console.log('deleleted !!')
     },
     'MOVE_UP' (state, index) {
@@ -68,6 +96,9 @@ export default new Vuex.Store({
     },
     editTodo ({ commit }, payload) {
       commit('EDIT_TODO', payload)
+    },
+    loadTodo ({ commit }, payload) {
+      commit('LOAD_TODO', payload)
     },
     moveUpTodo ({ commit }, payload) {
       commit('MOVE_UP', payload)
