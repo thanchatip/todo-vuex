@@ -13,7 +13,7 @@
         <input v-model="description" type="text" class="form-control">
       </div>
       <button class="btn btn-primary" @click="cancel">Cancel</button>&nbsp;
-      <button v-if="this.$route.params.task"  class="btn btn-primary" >Edit</button>
+      <button v-if="this.$route.params.task" @click="edit" class="btn btn-primary" >Save</button>
       <button v-else class="btn btn-primary" @click="save">Save</button>
 
     </div>
@@ -26,32 +26,41 @@ export default {
   data () {
     return {
       createError: false,
+      id: '',
       task: '',
       description: ''
     }
   },
   mounted () {
     const editTodo = this
+    editTodo.id = this.$route.params.id
+    console.log(editTodo.id)
     editTodo.task = this.$route.params.task
     editTodo.description = this.$route.params.description
   },
   computed: {
     ...mapGetters({
-      itemCount: 'itemCount',
-      allItems: 'allItems'
+      todoCount: 'todoCount',
+      allTodos: 'allTodos'
     })
   },
   methods: {
     ...mapActions({
-      addItem: 'addItem',
-      deleteItem: 'deleteItem',
-      editItem: 'editItem'
+      addTodo: 'addTodo',
+      deleteTodo: 'deleteTodo',
+      editTodo: 'editTodo'
     }),
     cancel () {
       this.$router.push({ name: 'home' })
     },
     save () {
-      this.addItem(this)
+      this.addTodo(this)
+      this.task = ''
+      this.description = ''
+      this.$router.push({ name: 'home' })
+    },
+    edit () {
+      this.editTodo(this)
       this.task = ''
       this.description = ''
       this.$router.push({ name: 'home' })

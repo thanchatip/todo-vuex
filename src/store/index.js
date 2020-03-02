@@ -6,14 +6,17 @@ Vue.use(Vuex)
 export default new Vuex.Store({
   state: {
     todos: [{
+      id: 0,
       task: '넌 내 기억을 지워야 돼 Im poison',
       description: 'I know I cant take it no more'
     },
     {
+      id: 1,
       task: 'This is love 온몸에 퍼진',
       description: '내 모든 Fear 내 속의 상처'
     },
     {
+      id: 2,
       task: '매일 내가 너로 아파도',
       description: 'The way I love The way I love'
     }]
@@ -21,21 +24,23 @@ export default new Vuex.Store({
   mutations: {
     'ADD_TODO' (state, payload) {
       var newTask = {
-        id: payload.newId,
+        id: payload.id,
         task: payload.task,
         description: payload.description
       }
       state.todos.push(newTask)
     },
     'EDIT_TODO' (state, todo) {
-      var todos = state.todos
-      todos.splice(todos.indexOf(todo), 1)
-      state.todos = todos
-      state.newTask = todo.task
+      state.todos[todo.id] = {
+        id: todo.id,
+        task: todo.task,
+        description: todo.description
+      }
+      console.log('updated !!')
     },
     'DELETE_TODO' (state, index) {
       state.todos.splice(index, 1)
-      console.log(index)
+      console.log('deleleted !!')
     },
     'MOVE_UP' (state, index) {
       if (index === 0) {
@@ -62,7 +67,7 @@ export default new Vuex.Store({
       commit('DELETE_TODO', payload)
     },
     editTodo ({ commit }, payload) {
-      commit('EDIT_ITEM', payload)
+      commit('EDIT_TODO', payload)
     },
     moveUpTodo ({ commit }, payload) {
       commit('MOVE_UP', payload)

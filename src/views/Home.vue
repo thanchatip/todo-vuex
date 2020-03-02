@@ -32,6 +32,7 @@ export default {
   name: 'Home',
   data () {
     return {
+      id: '',
       task: '',
       description: ''
     }
